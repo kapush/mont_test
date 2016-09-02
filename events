@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- The core React library -->
+	<script src="https://npmcdn.com/react@15.3.1/dist/react.js"></script>
+	<!-- The ReactDOM Library -->
+	<script src="https://npmcdn.com/react-dom@15.3.1/dist/react-dom.js"></script>
+  <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+  <script type="text/jsx">
+		var Hello = React.createClass({
+		render: function() {
+				return <div>Hello {this.props.name}</div>;
+			}
+		});
+		var myComponentElement = <Hello name="lascal" />;
+		ReactDOM.render(
+		  myComponentElement,
+		  document.getElementById('container')
+		);
+	</script>
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+  <div id="container">
+    <!-- This element's contents will be replaced with your component. -->
+</div>
+  </body>
+</html>
