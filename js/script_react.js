@@ -139,16 +139,17 @@
 //dates
 		var Filter_Date1 = React.createClass({	
 			getInitialState: function(){
-				return { date_default: '25.07.2016' };
+				return { date_default: '24.07.2016' };
 			},
 			componentDidMount: function(){
 				this.setState({fltr_id: this.props.fltr_id});
-				SetFilterState(this.state.fltr_id, this.state.date_default);
+				SetFilterState(this.props.fltr_id, this.state.date_default);
 			},
 			handleChange: function(e){
 				//var date1 = ValidateDate(e.target.value);
-				this.setState({date_default: date1});
+				this.setState({date_default: e.target.value});
 				//фильтровать мероприятия начиная с этой даты
+				SetFilterState(this.props.fltr_id, e.target.value);
 				var Events_filtered = FilterEvents(EventList);
 				ReactDOM.render(<Events items={Events_filtered} />,
 								document.getElementById('e_list')
@@ -169,13 +170,14 @@
 			
 			componentDidMount: function(){
 				this.setState({fltr_id: this.props.fltr_id});
-				SetFilterState(this.state.fltr_id, this.state.date_default);
+				SetFilterState(this.props.fltr_id, this.state.date_default);
 			},
 			
 			handleChange: function(e){
 				//var date2 = ValidateDate(e.target.value);
-				this.setState({date_default: date2});
+				this.setState({date_default: e.target.value});
 				//фильтровать мероприятия до этой даты
+				SetFilterState(this.props.fltr_id, e.target.value);
 				var Events_filtered = FilterEvents(EventList);
 				ReactDOM.render(<Events items={Events_filtered} />,
 								document.getElementById('e_list')
@@ -303,7 +305,7 @@
 		  <MenuList items={menu_list} />,
 		  document.getElementById('h_menu')
 		);
-		/*
+		
 		ReactDOM.render(
 		  <Filter_Date1 fltr_id="event_date1" />,
 		  document.getElementById('fltr_date1')
@@ -312,7 +314,7 @@
 		ReactDOM.render(
 		  <Filter_Date2 fltr_id="event_date2" />,
 		  document.getElementById('fltr_date2')
-		);*/
+		);
 		
 		ReactDOM.render(
 		  <Filter_select fltr_id="supplier" items={GetDestinctSuppliers(EventList)} tout="Все поставщики" />,
@@ -337,7 +339,7 @@
 		
 	    var Events_filtered = FilterEvents(EventList);
 		ReactDOM.render(
-		  <Events items={EventList} />,
+		  <Events items={Events_filtered} />,
 		  document.getElementById('e_list')
 		);
 		
