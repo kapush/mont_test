@@ -1,4 +1,4 @@
-//data for the event page
+//data for page-event
 		var logo_url = 'https://www.mont.com/';
 		var logo_img_src = 'img/logo1.png';
 		var signIn_url = 'https://www.mont.com/ru-ru/Account/Login?returnUrl=%2Fru-ru%2Fesd';
@@ -26,6 +26,13 @@
 		statusIcon['Я иду'] = 'go.svg';
 		statusIcon['На рассмотрении'] = 'wait.svg';
 		statusIcon['Отклонена'] = 'no.svg';
+		
+		var statusStyle = {};
+		statusStyle['Регистрация открыта'] = 'style-green';
+		statusStyle['Я иду'] = 'style-green';
+		statusStyle['На рассмотрении'] = 'style-gray';
+		statusStyle['Отклонена'] = 'style-red';
+		
 				
 		var EventList=[
 		{
@@ -55,6 +62,16 @@
 			state: 'На рассмотрении', 
 			event_type: 'Вебинар', 
 			city: 'Комсомольск-на-Амуре', 
+			supplier: ['Microsoft'], 
+			banner: 'eset.png'
+		},
+		{
+			event_date: '19.09.2016', 
+			subj: 'Будильник для Android в FireMonkey', 
+			descripion: 'Компания Embarcadero проводит в июне-июле 2016 года бесплатные вебинары. Приглашаем всех интересующихся разработкой настольных, корпоративных систем и приложений для мобильных устройств. Чтобы принять участие нужно зарегистрироваться.', 
+			state: 'Отклонена', 
+			event_type: 'Вебинар', 
+			city: 'Москва', 
 			supplier: ['Microsoft'], 
 			banner: 'eset.png'
 		},

@@ -92,7 +92,7 @@ h3 {
 }
 
 
-.header__menu{
+.header__menu {
     margin: 0;
     padding: 0;
 }
@@ -247,4 +247,17 @@ h3 {
 	color: #666;
     font-size: 13px;
 }
+
+.style-green {
+color: green;
+}
+
+.style-red {
+color: red;
+}
+
+.style-gray {
+color: gray;
+}
+
 

@@ -139,16 +139,24 @@
 //dates
 		var Filter_Date1 = React.createClass({	
 			getInitialState: function(){
-				return { date_default: '08.06.2016' };
+				return { date_default: '25.07.2016' };
+			},
+			componentDidMount: function(){
+				this.setState({fltr_id: this.props.fltr_id});
+				SetFilterState(this.state.fltr_id, this.state.date_default);
 			},
 			handleChange: function(e){
-				var date1 = ValidateDate(e.target.value);
+				//var date1 = ValidateDate(e.target.value);
 				this.setState({date_default: date1});
 				//фильтровать мероприятия начиная с этой даты
+				var Events_filtered = FilterEvents(EventList);
+				ReactDOM.render(<Events items={Events_filtered} />,
+								document.getElementById('e_list')
+				);
 			},
 			
 			render: function(){
-					return <input className="event-filters_date-input" value={this.state.date_default} onChange={this.handleChange}/>;				
+					return <input className="event-filters_date-input" value={this.state.date_default} onChange={this.handleChange} maxLength="10"/>;				
 					
 			}	
 			
@@ -158,14 +166,24 @@
 			getInitialState: function(){
 				return { date_default: '31.12.2025' };
 			},
+			
+			componentDidMount: function(){
+				this.setState({fltr_id: this.props.fltr_id});
+				SetFilterState(this.state.fltr_id, this.state.date_default);
+			},
+			
 			handleChange: function(e){
-				var date2 = ValidateDate(e.target.value);
+				//var date2 = ValidateDate(e.target.value);
 				this.setState({date_default: date2});
 				//фильтровать мероприятия до этой даты
+				var Events_filtered = FilterEvents(EventList);
+				ReactDOM.render(<Events items={Events_filtered} />,
+								document.getElementById('e_list')
+				);
 			},
 			
 			render: function(){
-					return <input className="event-filters_date-input" value={this.state.date_default} onChange={this.handleChange}/>;				
+					return <input className="event-filters_date-input" value={this.state.date_default} onChange={this.handleChange} maxLength="10"/>;				
 					
 			}	
 			
@@ -176,12 +194,24 @@
 			getInitialState: function(){
 				return {selected_value: 0 };
 			},
+			
+			componentDidMount: function(){
+				this.setState({fltr_id: this.props.fltr_id});
+			},
+			
 			handleChange: function(e){
 				this.setState({ selected_value: e.target.value });
-			//фильтровать меропрития по поставщику, добавить id фильтра в state и по нему понимать что за фильтр...
 				
+				SetFilterState(this.state.fltr_id, e.target.value);
+				
+				//фильтровать меропрития по фильтру, добавить id фильтра в state и по нему понимать что за фильтр...
+				var Events_filtered = FilterEvents(EventList);
+				ReactDOM.render(<Events items={Events_filtered} />,
+								document.getElementById('e_list')
+				);
 			},
-			render: function(){//список образуется из всех различных поставщиков из списка мероприятий
+			
+			render: function(){//список образуется из всех различных значений фильтра из списка мероприятий
 					return <select className="event-filters_elem" value={this.state.selected_value} onChange={this.handleChange}>
 									<option value='0'>{this.props.tout}</option>
 									{ 
@@ -225,7 +255,8 @@
 												<span className="event_type event_container_pad">{item.event_type}</span>
 												<span className="event_date event_container_pad">{item.event_date}</span>
 												<span className="event_city event_container_pad">{item.city}</span>
-												<span className="event_state event_container_pad"><img src={'img/icons/' + statusIcon[item.state]} width="15px" />&nbsp;{item.state}</span>
+												<span className={'event_state event_container_pad ' + statusStyle[item.state]}>
+												<img src={'img/icons/' + statusIcon[item.state]} width="15px" />&nbsp;{item.state}</span>
 											</div>									
 											<div className="event__subj event_line">
 												<h3>{item.subj}</h3>
@@ -272,48 +303,42 @@
 		  <MenuList items={menu_list} />,
 		  document.getElementById('h_menu')
 		);
-		
+		/*
 		ReactDOM.render(
-		  <Filter_Date1 />,
+		  <Filter_Date1 fltr_id="event_date1" />,
 		  document.getElementById('fltr_date1')
 		);
 		
 		ReactDOM.render(
-		  <Filter_Date2 />,
+		  <Filter_Date2 fltr_id="event_date2" />,
 		  document.getElementById('fltr_date2')
-		);
+		);*/
 		
 		ReactDOM.render(
-		  <Filter_select items={GetDestinctSuppliers(EventList)} tout="Все поставщики" />,
+		  <Filter_select fltr_id="supplier" items={GetDestinctSuppliers(EventList)} tout="Все поставщики" />,
 		  document.getElementById('fltr_suppliers')
 		);
 		
 		ReactDOM.render(
-		  <Filter_select items={GetDestinctTopics(EventList)} tout="Все направления"/>,
-		  document.getElementById('fltr_topics')
-		);
-		
-		ReactDOM.render(
-		  <Filter_select items={GetDestinctStatuses(EventList)} tout="Все статусы" />,
+		  <Filter_select fltr_id="state" items={GetDestinctStatuses(EventList)} tout="Все статусы" />,
 		  document.getElementById('fltrs_status')
 		);
 		
 		ReactDOM.render(
-		  <Filter_select items={GetDestinctTypes(EventList)} tout="Все типы" />,
+		  <Filter_select fltr_id="event_type" items={GetDestinctTypes(EventList)} tout="Все типы" />,
 		  document.getElementById('fltr_types')
 		);
 		
 		ReactDOM.render(
-		  <Filter_select items={GetDestinctRegions(EventList)} tout="Все округа"/>,
-		  document.getElementById('fltr_regions')
-		);
-		
-		ReactDOM.render(
-		  <Filter_select items={GetDestinctCities(EventList)} tout="Все города" />,
+		  <Filter_select fltr_id="city" items={GetDestinctCities(EventList)} tout="Все города" />,
 		  document.getElementById('fltr_cities')
 		);
+
 		
+	    var Events_filtered = FilterEvents(EventList);
 		ReactDOM.render(
 		  <Events items={EventList} />,
 		  document.getElementById('e_list')
 		);
+		
+		
